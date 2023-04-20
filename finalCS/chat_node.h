@@ -9,11 +9,13 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#define MAX_NAME_LEN 24
+
 typedef struct ChatNodeType
 {
     int port;
     char[] IP;
-    char[] Name;
+    char[MAX_NAME_LEN] Name;
 
     struct ChatNodeType *nextNode; // pointer to next node as needed
 } ChatNodeType;
