@@ -37,7 +37,7 @@ void *sender_handler(void *arg) {
 }
 
 // Sends a JOIN request to the server
-int send_join_request(ChatNode *server) {
+int send_join_request(ChatNode *server, message *msg) {
     // This function should send a message to the
     // server that includes the client's IP address, port number,
     // and logical name.
@@ -58,7 +58,7 @@ int send_join_request(ChatNode *server) {
 }
 
 // Sends a LEAVE request to the server
-int send_leave_request(ChatNode *server) {
+int send_leave_request(ChatNode *server, message *msg) {
     // This function should send a message to the
     // server that includes the client's logical name.
 
@@ -86,10 +86,21 @@ int send_leave_request(ChatNode *server) {
 }
 
 // Sends a message to the server
-int send_message(ChatNode *server, char *message) {
+int send_message(ChatNode *server, message *msg, char *message) {
     // This function should send a
     // message to the server that includes the client's logical
     // name and the message to be sent.
+
+    // set msg type to NOTE
+    msg.type = NOTE;
+
+    //  copy msg to message char
+    strncpy(msg.note, message, MAX_MSG_LEN);
+
+    // send mssg to server
+    send(server->sockfd, &msg, sizeof(message), 0);
+
+    return 0; 
 }
 
 // Sends a LEAVE request to the server if the client has joined
